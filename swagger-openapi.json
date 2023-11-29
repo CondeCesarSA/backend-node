@@ -1,0 +1,309 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentacion de la API de eventos",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/eventos": {
+            "get": {
+                "summary": "Obtener todos los eventos",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "String",
+                                            "example": "Name",
+                                            "required": true
+                                        },
+                                        "category": {
+                                            "type": "String",
+                                            "example": "Category",
+                                            "required": true
+                                        },
+                                        "date": {
+                                            "type": "String",
+                                            "example": "Date",
+                                            "required": true
+                                        },
+                                        "image": {
+                                            "type": "String",
+                                            "example": "image",
+                                            "required": true
+                                        },
+                                        "place": {
+                                            "type": "String",
+                                            "example": "place",
+                                            "required": true
+                                        },
+                                        "price": {
+                                            "type": "Number",
+                                            "example": 2,
+                                            "required": true
+                                        },
+                                        "capacity": {
+                                            "type": "Number",
+                                            "example": 2,
+                                            "required": true
+                                        },
+                                        "assistance": {
+                                            "type": "Number",
+                                            "example": 2
+                                        },
+                                        "estimate": {
+                                            "type": "Number",
+                                            "example": 2
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "application/json": {
+                            "schema": {
+                                "type": "string",
+                                "message": "Eventos not found"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Crear un nuevo evento",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nombre del evento",
+                                        "required": true
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "Categoría del evento",
+                                        "required": true
+                                    },
+                                    "date": {
+                                        "type": "string",
+                                        "example": "Fecha del evento (formato: YYYY-MM-DD)",
+                                        "required": true
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "example": "URL de la imagen del evento",
+                                        "required": true
+                                    },
+                                    "place": {
+                                        "type": "string",
+                                        "example": "Lugar del evento",
+                                        "required": true
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "example": 20,
+                                        "required": true
+                                    },
+                                    "capacity": {
+                                        "type": "number",
+                                        "example": 100,
+                                        "required": true
+                                    },
+                                    "assistance": {
+                                        "type": "number",
+                                        "example": 0
+                                    },
+                                    "estimate": {
+                                        "type": "number",
+                                        "example": 0
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Evento creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Evento creado exitosamente",
+                                    "event": {
+                                        "id": 1,
+                                        "name": "Nombre del evento",
+                                        "category": "Categoría del evento",
+                                        "date": "Fecha del evento",
+                                        "image": "URL de la imagen del evento",
+                                        "place": "Lugar del evento",
+                                        "price": 20,
+                                        "capacity": 100,
+                                        "assistance": 0,
+                                        "estimate": 0
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud incorrecta",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "message": "Error en la solicitud. Asegúrese de proporcionar los datos correctos."
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        },
+        "/eventos/{name}": {
+            "get": {
+                "summary": "Obtener un evento por nombre",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Nombre del evento"
+                        },
+                        "description": "Nombre del evento a buscar"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "format": "int64",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Nombre del evento"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Evento no encontrado"
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Eliminar un evento por nombre",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Nombre del evento"
+                        },
+                        "description": "Nombre del evento a eliminar"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Evento eliminado exitosamente"
+                    },
+                    "404": {
+                        "description": "Evento no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Evento no encontrado con el nombre proporcionado"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        },
+        "/eventos/{id}": {
+            "put": {
+                "summary": "Actualiza el nombre un evento por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "655f64ad2ba40a0dd47ff30e"
+                        },
+                        "description": "ID del evento a actualizar"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nuevo nombre del evento"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Evento actualizado exitosamente"
+                    },
+                    "404": {
+                        "description": "Evento no encontrado"
+                    },
+                    "400": {
+                        "description": "Solicitud incorrecta"
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        }
+    }
+}
